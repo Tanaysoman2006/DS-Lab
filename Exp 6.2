@@ -1,0 +1,36 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+struct Node {
+	int data;
+	struct Node* prev;
+	struct Node* next;
+};
+
+struct DoublyLinkedList {
+	struct Node* head;
+	struct Node* tail;
+};
+
+void append(struct DoublyLinkedList* list, int data) {
+	struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+	newNode->data = data;
+	newNode->next = NULL;
+	newNode->prev = NULL;
+
+	if (list->head == NULL) {
+		list->head = list->tail = newNode;
+	} else {
+		list->tail->next = newNode;
+		newNode->prev = list->tail;
+		list->tail = newNode;
+	}
+}
+
+void displayList(struct DoublyLinkedList* list) {
+	struct Node* current = list->head;
+	while (current != NULL) {
+		printf("%d <-> ", current->data);
+		current = current->next;
+	}
+	printf("NULL\n");
